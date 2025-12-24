@@ -1,0 +1,412 @@
+---
+title: "E-commerce Exploratory Analytics & Dashboard"
+author: "rs2904"
+date: "`r Sys.Date()`"
+output:
+  pdf_document:
+    toc: yes
+  html_document:
+    theme: readable
+    toc: yes
+    number_sections: yes
+---
+
+# Assignment Overview
+
+## Background
+
+With the rise of e-commerce, understanding customer behavior and purchasing patterns is vital for online businesses. Utilizing transactional data can provide actionable insights, helping to optimize sales strategies, improve customer experiences, and maximize revenue. Your primary objective is to assist an online retailer by analyzing their transaction data to uncover sales trends, customer segmentation, and potential areas of improvement.
+
+## Data Insights
+
+The data set captures transactions from December 2010 to December 2011 from a UK-based online retailer. Fields include:
+
+-   `InvoiceNo` - Invoice number - a 6-digit integral number uniquely assigned to each transaction. If this code starts with letter 'c', it indicates a cancellation.
+-   `StockCode` - a 5-digit integral number uniquely assigned to each distinct product
+-   `Description` - product name
+-   `Quantity` - the quantities of each product (item) per transaction
+-   `InvoiceDate` - the day and time when each transaction was generated
+-   `UnitPrice` - product price per unit
+-   `CustomerID` - a 5-digit integral number uniquely assigned to each customer
+-   `Country` - the name of the country where each customer resides
+
+For more details about the data set, refer to the [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/Online+Retail).
+
+## Part 1: Data Exploration with R (60% of total marks)
+
+### Task
+
+Based on the data set, determine:
+
+1.  What are the most popular products and how do their sales vary over time?
+2.  Can we segment customers based on their purchasing behavior?
+3.  Are there specific countries that contribute more to sales or have unique buying patterns?
+4.  (Bonus) How do cancellations impact overall sales trends?
+
+**Reflection**: Beyond the questions above, take a moment to examine the data set critically.
+
+-   Are there any other interesting patterns or anomalies you notice?
+-   What additional questions or analyses come to mind that could be valuable for the retailer?
+-   How might external factors, not present in the data set, influence the trends you've observed?
+
+Document your process, findings, and reflections in the current *R Notebook* - just use the space below this assignment instructions. Be compact in your descriptive and reflective answers!
+
+### Submission Requirements
+
+-   The RMD file containing all answers and relevant code.
+-   An HTML version of the notebook, knitted from the RMD.
+
+**Note**: Ensure your report is: - Structured for easy navigation. - Includes clear visualizations with apt labels and annotations. - Provides short, compact answers to the exploratory questions, also documenting key steps. - Contains efficient and easily executable R code, preferably using `%>%` pipes for streamlined data manipulation.
+
+## Part 2: Tableau Dashboard (40% of total marks)
+
+### Task
+
+Using insights from your R analysis, design a user-friendly, interactive dashboard in Tableau Desktop. Focus on showcasing significant findings related to sales trends and customer behaviors. Your target audience is the CEO of the online retail store - a non-tech-savvy individual keen on understanding broad trends, customer insights, and avenues for growth.
+
+1.  **Storyboarding**: Prior to Tableau, sketch a dashboard storyboard, snapshot or photograph it for the submission.
+2.  **Dashboard Creation in Tableau**: Transform your R insights into a user-centric Tableau dashboard. Highlight crucial trends and customer behaviors.
+
+### Guidelines
+
+-   Prioritize clarity and ease of navigation.
+-   Utilize filters and design elements for an intuitive user experience.
+-   Add descriptions and headers to guide users through your dashboard.
+
+### Submission Requirement
+
+-   Submit the image of your storyboard sketch;
+-   Submit the Tableau Packaged Workbook (TWBX) file, including all worksheets and the final dashboard.
+
+**Caution**: Always export as a *Tableau Packaged Workbook (TWBX)*. Exporting as a *Tableau Workbook (TWB)* might omit important data operations, making your dashboard potentially unreadable.
+
+------------------------------------------------------------------------
+
+# Commence Your Assignment Here
+
+## Data Import & Preliminaries
+
+Bringing external datasets into R for analysis is known as **data import** in the language. R has a number of functions and packages for importing data from different sources.
+
+The below code snippet will help to import the data set "Online Retail.csv" in R for further analysis.
+
+```{r}
+cw_data <- read.csv("Online Retail.csv") #the data set is assigned to the variable cw_data
+```
+
+After the import, the below code will help to start the analysis of the data by giving the head and summary of the data set.
+
+**head():** For checking the first 5 entries of the data set and along with the column names to understand the structure.
+
+**summary():** For obtaining the summary statistics for the data set using the summary() function, giving a brief rundown of the numerical variables.
+
+**library():** Used too load a specific package or library.
+
+```{r}
+head(cw_data)
+summary(cw_data)
+library(dplyr) #dplyr library is essentially a set of functions designed to make manipulating dataframes more intuitive and user-friendly.
+```
+
+## Data Diagnostic
+
+The process of looking through data to find and fix problems, irregularities, or trends that could affect its dependability and quality is called **data diagnostic**. Making sure the data is correct, comprehensive, and appropriate for analysis is part of it.
+
+**(is.na(cw_data)):** Used to calculate the number of missing values in each column of the data set.
+
+**print():** To display the missing values for each column to check for any gaps in the data.
+
+```{r}
+missing_values_per_column <- colSums(is.na(cw_data))
+cat("Missing Values Per Column:\n")
+print(missing_values_per_column)
+```
+
+The purpose of converting the **InvoiceDate** column to **POSIXct** format is to improve its temporal evaluation capabilities by making it more appropriate for time-based analysis.
+
+After conversion, the **InvoiceDate** field undergoes a comprehensive review to find and fix any errors. The objective is to guarantee data accuracy.
+
+```{r}
+library(lubridate) #lubridate package offers utilities that make date-time information manipulation, extraction, and computation easier. 
+
+cw_data$InvoiceDate <- as.POSIXct(cw_data$InvoiceDate, format = "%d/%m/%Y %H:%M")
+sum(is.na(cw_data$InvoiceDate))
+```
+
+## In-depth Exploratory Data Analysis
+
+### Question 1. What are the most popular products and how do their sales vary over time?
+
+Analyzing the sale patterns and popularity of products is critical for all businesses looking for strategic insights. With the goal of understanding the most well-liked products and analyzing how there is a fluctuation over time, the below analysis provides the useful data for wise decision making in the ever evolving market environment.
+
+**aggregate():** Used to calculate the summary statistics or average of the given data set.
+
+The products are then sorted in a descending order based on the quantity to pinpoint the most popular product.
+
+```{r}
+product_sales <- aggregate(cw_data$Quantity, by = list(Product = cw_data$Description), sum)
+productlist_sorted <- product_sales[order(-product_sales$x), ]
+head(productlist_sorted,10)
+cat("The Most Popular Product is", productlist_sorted$Product[1],"\n")
+```
+
+The result shows that "**WORLD WAR 2 GLIDERS ASSTD DESIGNS**" is the top-performing item.
+
+```{r}
+
+library(ggplot2)
+
+productlist_top3 <- cw_data %>%
+  filter(Description %in% c("WORLD WAR 2 GLIDERS ASSTD DESIGNS", "JUMBO BAG RED RETROSPOT", "ASSORTED COLOUR BIRD ORNAMENT")) %>%
+  mutate(total_sales = Quantity * UnitPrice) #the top 3 out of the top 5 products from the above list is added in this
+
+productlist_top3 <- productlist_top3 %>%
+  filter(total_sales >= 0)
+ggplot(productlist_top3, aes(x = InvoiceDate, y = Quantity, color = Description)) +
+  geom_point(size = 2, alpha = 0.8, show.legend = TRUE) +
+  geom_line(size = 1.5, alpha = 0.8, linetype = "solid") +
+  labs(title = "Top 3 Products: Sales Over Time", x = "Date", y = "Quantity") +
+  theme_minimal() +
+  scale_color_brewer(palette = "Set1") +
+  theme(legend.position = "top", 
+        legend.text = element_text(size = 7), 
+        legend.title = element_blank(),
+        axis.text.x = element_text(angle = 45, hjust = 1)) +
+  annotate("text", x = max(productlist_top3$InvoiceDate), 
+           y = max(productlist_top3$total_sales), 
+           label = "", 
+           hjust = 1, vjust = 1, size = 3, color = "gray50") +
+  scale_x_datetime(date_labels = "%b %Y", date_breaks = "3 months") +
+  theme(plot.title = element_text(hjust = 0.5, size = 18, face = "bold"),
+        plot.caption = element_text(size = 8, color="gray50"))
+```
+
+Every product is represented by a colored line, with the quantity sold shown on the y-axis and the dates (**InvoiceDate**) displayed on the x-axis. You can see how the sales numbers of these particular products have fluctuated over time with this visualization, which offers insights into their popularity and possible seasonal fluctuations.
+
+[**Conclusion:**]{.underline}
+
+Thorough quality checks of the data set was carried out to find and fix any missing values in the data set. The **InvoiceDate** information is converted into an appropriate date-time format in order to enable time-based analysis.
+
+Based on total quantity sold, the most popular product was determined to be "**WORLD WAR 2 GLIDERS ASSTD DESIGNS**" which offers insightful information about customer preferences.
+
+The top three best-selling products are "**WORLD WAR 2 GLIDERS ASSTD DESIGNS**", "**JUMBO BAG RED RETROSPOT**" and "**ASSORTED COLOUR BIRD ORNAMENT**". The graph shows the sales trends for these products over time. The graphic gives a brief summary of how the sales quantities of each product have changed over time, with each colored line representing a different product.
+
+### Question 2. Can we segment customers based on their purchasing behavior?
+
+The objective of this question is to identify unique trends in consumer purchasing behavior in order to inform customized marketing plans and raise overall company performance.
+
+[**Data Filtering:**]{.underline} Cleaning the dataset entails eliminating any missing or erroneous customer entries in order to provide a refined dataset that is called **filtered_data**.
+
+```{r}
+filtered_data <- cw_data %>%
+  filter(CustomerID != 0) #to filter out rows where CustomerID is equal to 0
+head(filtered_data)
+nrow(filtered_data) #nrow() is used to check the total number of rows in the data set
+```
+
+A new dataframe is created named **filtered_data**, which contains the records of all the valid customers.
+
+**Summary:** The records with missing or invalid customer identifiers have been eliminated.
+
+[**Strategic Customer Segmentation:**]{.underline} Understanding consumer behaviour through classifying them according to their buying activity is the main goal of strategic segmentation.
+
+```{r}
+segments <- cw_data %>%
+  group_by(CustomerID) %>%
+  summarise(
+    TotalPurchases = n(),
+    TotalSpending = sum(Quantity * UnitPrice)
+  )
+head(segments)
+nrow(segments)
+```
+
+The **segments** dataframe is composed of metrics that are computed for every customer, including **TotalPurchases** which is the total amount obtained by multiplying **Quantity** by **UnitPrice,** and **TotalSpending** which is the number of transactions.. The data has been grouped together by **CustomerID** by the use of dplyr package in R.
+
+**Summary:** A complete summary dataframe, called **segments** has been created that contains various customer segments and relevant metrics like the number of purchases and total spending.
+
+[**Agglomerative Grouping Analysis:**]{.underline} To identify groups within the customers that correspond to their unique buying patterns.
+
+For clustering, the segments of the dataframe are chosen so that the relevant columns (**TotalPurchases** and **TotalSpending**) are selected. Three clusters **(k = 5)** have been created for the customers based on their purchase metrics using the hierarchical clustering (**hclust** function). In the **segments** dataframe, the cluster labels are allocated to every customer.
+
+```{r}
+clustering_data <- segments[, c("TotalPurchases", "TotalSpending")]
+hc <- hclust(dist(clustering_data))
+clusters <- cutree(hc, k = 5)
+segments$Cluster <- as.factor(clusters)
+head(segments, 10)
+```
+
+**Summary:** A recently added factor variable named "**Cluster**" in the segments dataframe now denotes the assigned cluster for each customer.
+
+[**Conclusion:**]{.underline}
+
+Through the removal of incomplete records, the systematic analysis successfully segments customers based on their purchase behavior, guaranteeing data accuracy. With the help of KPIs like **TotalPurchases** and **TotalSpending**, the resulting customer categories provide detailed information. By using clustering, different buying patterns can be identified, allowing for more focused marketing campaigns. These results offer practical information that directs strategic choices and improves overall business success.
+
+### Question 3. Are there specific countries that contribute more to sales or have unique buying patterns?
+
+By analyzing whether particular nations make a substantial contribution to overall sales or display distinctive purchasing patterns, this approach seeks to provide important insights into sales dynamics. Businesses trying to customize strategy, distribute resources effectively, and modify marketing tactics for a variety of markets must comprehend these regional quirks.
+
+The **summary()** function has been used to derive the summary statistics of the data set.
+
+```{r}
+summary(cw_data)
+unique_countries <- unique(cw_data$Country)
+print(unique_countries)
+```
+
+A list of all the **unique** countries in the data set are displayed above.
+
+Total sales for each nation are determined by multiplying the **UnitPrice** by the **Quantity** as below.
+
+```{r}
+sales_by_country <- cw_data %>%
+  group_by(Country) %>%
+  summarise(total_sales = sum(UnitPrice*Quantity))
+sales_by_country
+```
+
+The above helps in identifying the regions which contribute significantly to the sales.
+
+The distribution of total sales across several countries is calculated below:
+
+```{r}
+sales_by_country <- sales_by_country %>%
+  mutate(Country = reorder(Country, -total_sales))
+
+ggplot(sales_by_country, aes(x = Country, y = total_sales, fill = Country)) +
+  geom_bar(stat = "identity", color = "black") +
+  labs(title = "Total Sales by Country", x = "Country", y = "Total Sales") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(size=8,angle = 90, hjust = 1),
+        axis.title.x = element_text(size = 10),
+        plot.title = element_text(size = 18, hjust=0.5, face = 'bold'),
+        legend.text = element_text(size = 6),
+        legend.title = element_text(size = 6),
+        legend.position = "top",
+        legend.key.size = unit(0.3, "cm"))+
+  scale_y_continuous(labels = scales::comma_format(scale = 1e-6, suffix = "M"))
+
+ggplot(sales_by_country, aes(x = Country, y = total_sales, fill = Country)) +
+  geom_bar(stat = "identity", color = "black") +
+  labs(title = "Total Sales by Country(Logarithmic Scale)", x = "Country", y = "Total Sales (log scale)") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(size=8, angle = 90, hjust = 1),
+        axis.title.x = element_text(size = 10),
+        plot.title = element_text(size = 18, hjust=0.5, face = 'bold'),
+        legend.text = element_text(size = 6),
+        legend.title = element_text(size = 6),
+        legend.position = "top",
+        legend.key.size = unit(0.3, "cm")) +
+  scale_y_log10(labels = scales::comma_format(scale = 1e-6, suffix = "M"))
+
+```
+
+For the purpose of visualizing total sales, the first code snippet (scale_y_continuous) formats labels with commas and a "M" suffix on a linear scale. A logarithmic scale is used in the second code snippet (scale_y_log10) to provide a clearer depiction of the distribution of the data, which is advantageous for data sets with a large range of values.
+
+The distribution of order quantity among different countries is shown visually by a box plot below.
+
+```{r}
+ggplot(cw_data, aes(x = reorder(Country, Quantity, FUN = median), y = Quantity)) +
+  geom_boxplot( color = "royalblue", alpha = 0.7) +
+  labs(title = "Order Quantity Distribution by Country", x = "Country", y = "Order Quantity (in units)") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        plot.title = element_text(size = 18, hjust=0.5, face = 'bold'),
+        legend.position = "none")
+
+```
+
+The analysis of the box plot yields valuable information about the central tendencies and dispersion of order quantity in various countries. It also displays the distribution of order quantities among several nations which highlights the variation in consumer behavior.
+
+**Summary:** The data set was analysed to find important features, highlighting major contributors by calculating total sales for each distinct country and identifying unique countries. To clearly depict the distribution of order quantities among nations as well as overall sales, visualizations were used.
+
+According to the data, the **UK accounts for a significant portion of total sales**, highlighting the necessity of specialized tactics and resource allocation. A significant concentration of overall sales in the UK is shown by the data. This highlights the necessity of developing strategies that are specific to the British market. Companies should use their resources carefully in order to take advantage of UK consumers' high spending power and unique purchasing habits.
+
+Although the contributions from other nations might not be as great, the understanding of unique purchasing habits offers useful direction for modifying marketing strategies and formulating tactical choices.
+
+### Question 4 (Bonus). How do cancellations impact overall sales trends?
+
+Analyzing how cancellations affect sales trends is essential to understand the dynamics of operations. The goal of this study is to give a thorough grasp of the complex relationship between sales and cancellations to the company looking to enhance customer happiness and optimize operations. This study directs strategic decisions for improved corporate performance by finding trends and insights.
+
+[**Finding Cancelled Transactions:**]{.underline} We filtered the data to find transactions that had an invoice number beginning with "**C**" which indicates that the transaction was cancelled. The outcome of this procedure was the establishment of a special dataframe called "**cancelled_data**," which contained only records of cancelled transactions.
+
+```{r}
+cancelled_data <- cw_data %>%
+  filter(startsWith(InvoiceNo, "C"))
+
+sales_plot <- cw_data %>%
+  group_by(InvoiceDate) %>%
+  summarise(
+    TotalSales = sum(Quantity * UnitPrice),
+    cancelledSales = sum(ifelse(startsWith(InvoiceNo, "C"), Quantity * UnitPrice, 0))
+  )
+```
+
+Grouping the original data by **InvoiceDate**, two key metrics were calculated for each date:
+
+-   [**TotalSales:**]{.underline} The sum of **Quantity** multiplied by **UnitPrice** for all transactions.
+
+-   [**cancelledSales:**]{.underline} The sum of Quantity multiplied by **UnitPrice** for cancelled transactions. This analysis generated a summary dataframe, "**sales_plot**," capturing both total and cancelled sales trends over time.
+
+```{r}
+ggplot(sales_plot, aes(x = InvoiceDate)) +
+  geom_line(aes(y = TotalSales, color = "Total Sales"), size = 1.2, alpha = 0.8) +
+  geom_line(aes(y = cancelledSales, color = "cancelled Sales"), size = 1.2, alpha = 0.8, linetype = "dashed") +
+  labs(title = "Sales Dynamics: Total vs Cancelled",
+       x = "Date",
+       y = "Sales",
+       color = "Sales Type") +
+  scale_y_continuous(labels = scales::comma_format()) +
+  theme_minimal() +
+  theme(legend.position = "top", plot.title = element_text(size = 18, hjust=0.5, face = 'bold'),
+        legend.title = element_blank())
+```
+
+[**Visualization of Total vs. Cancelled Sales Trends:**]{.underline} To show how total and cancelled sales have changed over time, a dynamic line plot is created above.
+
+**Summary:**
+
+**Analysis of Cancellations:** Segregated and recognized transactions within the data set that were designated as cancellations.
+
+**Sales Insights:** Provided an overview of overall sales trends and cancellations within the data set by summarizing both total and cancelled sales for each date.
+
+**Visual Representation:** Using a line plot, it was possible to clearly show how total and cancelled sales have changed over time.
+
+Companies can use this research as a strategic compass to help them make decisions that will improve customer experiences and increase operational efficiency in the face of cancellations' negative effects on overall sales trends.
+
+## Summary & Key Takeaways
+
+[**Summary:**]{.underline}
+
+The "**Online Retail.csv**" data set was analysed using structural exploration, data diagnostics, and strategic questions.
+
+**Product Popularity:** Sales trends for the top three products throughout time were visualized, and "WORLD WAR 2 GLIDERS ASSTD DESIGNS" was found to be the best-performing product.
+
+**Consumer Segmentation:** To gain insights into a range of purchase behaviors, hierarchical clustering was employed for strategic consumer segmentation.
+
+**Sales by Country:** This analysis focused on the countries that made up the majority of sales, with a particular emphasis on the **UK**.
+
+**Impact of Cancellations:** Provided operational insights by examining the correlation between sales trends and cancellations.
+
+[**Key Takeaways:**]{.underline}
+
+**Product Strategy:** Based on the success of "**WORLD WAR 2 GLIDERS ASSTD DESIGNS**" adjust marketing plans and inventory.
+
+**Customer-Centric Approach:** Use customer segmentation to improve engagement and target marketing.
+
+**Global Sales Tactics:** Take note of the **UK's** significant contribution to overall sales and modify plans to account for various national purchasing habits.
+
+**Operational Optimization:** For increased customer happiness and operational efficiency, comprehend the dynamics of cancellations.
+
+For strategic decision-making, marketing optimization, and general business success, this detailed analysis offers useful insights.
+
+**Analysis by Critical Examination:**
+
+Interesting patterns observed:
+
+1.  [Seasonal Trends:]{.underline} Marketing and inventory planning depend heavily on seasonal sales patterns, which are influenced by occasions like festivals and holidays. Acknowledging peak seasons enables companies to coordinate plans, maximize stock, and satisfy increased customer demand at particular periods of the year.
+
+2.  [Customer Behavior Anomalies:]{.underline} Abnormalities in customer behavior are indicated by sudden swings in sales data that cannot be attributed to internal reasons. Customer behaviors might be impacted by outside factors like cultural or economic changes. Businesses can adjust their strategy to changing client preferences and external dynamics by recognising and comprehending these anomalies.
+
+3.  [Product Combinations:]{.underline} Consistent product matching analysis provides business insights. The ability to identify products that are regularly bought together allows for the development of packaged offers or tailored suggestions. This tactic improves the shopping encounter, promotes repeat business, and increases customer happiness.

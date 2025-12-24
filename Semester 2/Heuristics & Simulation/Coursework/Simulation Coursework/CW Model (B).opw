@@ -1,0 +1,37 @@
+[RESOURCES]
+Alan and Mary
+Rookie Servers
+Experienced Servers
+Expert Server
+[VARIABLES]
+Standard Customers.NumberOut
+counter1
+Premium Customers.NumberOut
+Experienced_Servers.NumberOut
+Experienced_Servers.NumberIn
+Will the premium customer wait?.NumberOut True
+Rookie_Servers.NumberOut
+Rookie_Servers.NumberIn
+Will the premium customer wait?.NumberOut False
+Will the standard customer wait?.NumberOut True
+distribution
+Will the standard customer wait?.NumberOut False
+Will the premium customer going to rookie server wait?.NumberOut False
+Duplicate Customers.NumberOut Dup
+Duplicate Customers.NumberOut Orig
+Feedback Process.NumberOut
+Feedback Process.NumberIn
+Whether the call exceeds 15 mins?.NumberOut True
+Whether the call exceeds 10 mins?.NumberOut True
+Will the premium customer going to rookie server wait?.NumberOut True
+Total Balked Customers.NumberOut
+Whether the call exceeds 15 mins?.NumberOut False
+Whether the call exceeds 10 mins?.NumberOut False
+Expert_Servers.NumberOut
+Expert_Servers.NumberIn
+Customer Call Complete.NumberOut
+Feedback Process Done.NumberOut
+Will the premium customers go to experienced servers?.NumberOut False
+Will the premium customers go to experienced servers?.NumberOut True
+Group of Customers.NumberOut
+Variable for distribution

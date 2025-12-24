@@ -1,0 +1,320 @@
+# Importing necessary packages for data analysis and visualization
+library(ggplot2)            # For creating plots
+library(dplyr)              # For data manipulation
+library(tidyr)              # For basic data manipulation and analysis
+library(stringr)            # For more advanced data manipulation
+library(stats)              # For statistical analysis
+library(lubridate)          # For easier time series analysis
+library(caret)              # For machine learning
+
+# Read the dataset from the file path
+z_df <- read.csv("C:/Users/Ritwik Singh/OneDrive - University of Bath/Documents/Semester 2/Data Mining & ML/Coursework/Data_DMML.csv")
+
+# Adding a new column to Calculate Total Engagement (TotalPosts / AccountAge)
+z_df$TotalEngagement <- z_df$TotalPosts / z_df$AccountAge
+
+## Exploratory Data Analysis ##
+# Displaying the first six entries of the dataset
+head(z_df)
+
+# Displaying the last six entries of the dataset
+tail(z_df)
+
+# Displaying information about the structure and attributes of the dataframe
+str(z_df)
+
+# Creating boxplots of behavioral variables without considering the 'ID' column
+data_to_plot <- z_df[, -1]
+par(mfrow=c(2, 7))
+for (i in 1:ncol(data_to_plot)) {
+  boxplot(data_to_plot[, i], main = names(data_to_plot)[i], col = "violet")
+}
+
+# Displaying summary statistics of the dataframe
+summary(z_df)
+# Displaying summary statistics of numeric columns only
+summary(z_df[, sapply(z_df, is.numeric)])
+
+# Checking for duplicated rows in the 'ID' column
+sum(duplicated(z_df$ID))
+# The value of this command coming as zero proves that there are no duplicate entries in the 'ID' column
+
+# Displaying the number of NA values in each column
+missing_values <- colSums(is.na(z_df))
+print(missing_values)
+
+## As there are no missing values, we can proceed with further analysis ##
+
+# Pairwise scatter plots to visualize relationships between numeric variables
+pairs(z_df[, c(
+  "InDegree", "OutDegree", "TotalPosts", "MeanWordCount", 
+  "LikeRate", "PercentQuestions", "PercentURLs", 
+  "MeanPostsPerThread", "InitiationRatio", "MeanPostsPerSubForum", 
+  "PercBiNeighbours", "AccountAge"
+)], 
+lower.panel = panel.smooth,
+upper.panel = panel.smooth, 
+pch = 16, 
+col = "violet", 
+cex = 0.7, 
+cex.labels = 0.9,
+main = "Scatterplot Matrix of Behavioral Variables",
+font.main = 1,
+oma = c(3, 3, 0, 0), 
+bg = "#F0F0F0"
+)
+
+# Behavioral variables to include in the histogram matrix
+variables <- c("InDegree", "OutDegree", "TotalPosts", "MeanWordCount", "MeanPostsPerSubForum")
+
+# Loop through each variable and create a histogram
+par(mfrow=c(3, 2))
+options(repr.plot.width=10, repr.plot.height=8)
+for (variable in variables) {
+  # Calculate the range and number of bins
+  var_range <- range(z_df[[variable]])
+  num_bins <- ceiling(diff(var_range) / 50)  # Adjust bin width here
+  hist(z_df[[variable]], 
+       breaks = seq(var_range[1], var_range[2], length.out = num_bins + 1),
+       main = paste("Distribution of", variable),
+       xlab = variable, 
+       ylab = "Frequency",
+       col = "violet",    
+       border = "black",   
+       las = 1,            
+       cex.axis = 0.8)     
+}
+
+
+# Convert AccountAge from months to years and create categories
+z_df$AccountAge_years <- cut(z_df$AccountAge / 12, breaks = c(0, 1, 2, 3, 4, 5, 10, Inf),
+                             labels = c("1 yr", "2 yrs", "3 yrs", "4 yrs", "5 yrs", "6-10 yrs", "Over 10 yrs"))
+
+# Set the size of the plot
+options(repr.plot.width=10, repr.plot.height=8)
+
+# Scatter plot of TotalPosts vs AccountAge in months, color by AccountAge_years
+plot(z_df$AccountAge, z_df$TotalPosts, 
+     main = "TotalPosts vs AccountAge in Months",
+     xlab = "AccountAge (Months)",
+     ylab = "TotalPosts",
+     col = as.numeric(z_df$AccountAge_years),
+     pch = 19)
+legend("topright", legend = levels(z_df$AccountAge_years), 
+       col = 1:length(levels(z_df$AccountAge_years)), pch = 19, cex = 0.6, 
+       text.width = 4, bg = "white", inset = c(0.02, 0.02))
+
+# Exclude non-numeric variables from z_df to construct correlation matrix
+numeric_df <- z_df %>%
+  select(-c(AccountAge_years, ID))
+
+# Compute the correlation matrix
+correlation_matrix <- cor(numeric_df, method = "pearson")
+
+# Convert the correlation matrix to a data frame
+correlation_df <- reshape2::melt(correlation_matrix)
+
+# Set the size of the plot
+options(repr.plot.width=10, repr.plot.height=8)
+
+# Create heatmap of correlation matrix with annotations and numbers
+ggplot(correlation_df, aes(x = Var1, y = Var2, fill = value, label = round(value, 2))) +
+  geom_tile(color = "black") +
+  scale_fill_gradient2(low = "grey", mid = "skyblue", high = "maroon", midpoint = 0,
+                       limits = c(-1, 1), name = "Correlation") +
+  geom_text(color = "black", size = 3) +  # Add text labels
+  theme_minimal() +
+  labs(title = "Pearson Correlation Heatmap",
+       x = "Variables", y = "Variables",
+       caption = "Note: Maroon indicates high positive correlation, grey indicates high negative correlation.") +
+  theme(plot.title = element_text(hjust = 0.5),
+        axis.text.x = element_text(angle = 90, hjust = 1),
+        axis.text.y = element_text(angle = 0, hjust = 1),
+        plot.caption = element_text(hjust = 0, color = "black", size = 9)) 
+
+## Unsupervised Learning ##
+
+# Scaling the data
+column_names <- colnames(z_df)
+scaler <- preProcess(z_df, method = c("center", "scale"))
+
+# Applying the scaler library to the data
+z_df_scaled <- predict(scaler, newdata = z_df)
+z_df_scaled <- z_df_scaled[, !colnames(z_df_scaled) %in% c("ID","TotalEngagement","AccountAge_years")]
+
+# Elbow method to find optimal number of clusters for K-Means
+k_values <- 1:10
+ssd <- numeric(length(k_values))
+for (i in seq_along(k_values)) {
+  kmeans_model <- kmeans(z_df_scaled, centers = k_values[i], nstart = 25)
+  ssd[i] <- kmeans_model$tot.withinss
+}
+plot(k_values, ssd, type = "b", pch = 19, col = "violet",
+     xlab = "Number of Clusters", ylab = "Sum of Squared Distances",
+     main = "Elbow Plot for K-Means Clustering") 
+text(k_values, ssd, labels = k_values, pos = 3, cex = 0.8, col = "violet")
+
+# By the elbow plot, we can see the curve flattens after 2 which means we can take 2 clusters for further analysis
+
+## K-Means Clustering ##
+kmeans_model <- kmeans(z_df_scaled, centers = 2, nstart = 25)
+clusters <- kmeans_model$cluster
+z_df$Clusters <- clusters
+
+# Set the size of the plot
+options(repr.plot.width=10, repr.plot.height=8)
+
+# Scatter plot of InDegree vs OutDegree colored by cluster
+ggplot(z_df, aes(x = InDegree, y = OutDegree, color = factor(Clusters))) +
+  geom_point() +
+  labs(title = "K-Means: InDegree v/s OutDegree", x = "InDegree", y = "OutDegree") +
+  scale_color_manual(values = c("violet", "black")) + 
+  theme(plot.title = element_text(hjust = 0.5))+ theme(legend.box.background = element_rect(color = "black", size = 1))
+
+## Hierarchical clustering ##
+hierarchical_model <- hclust(dist(z_df_scaled))
+cut_tree <- cutree(hierarchical_model, k = 2)
+z_df$Hierarchical_Cluster <- as.factor(cut_tree)
+
+# Distribution of cluster sizes
+cluster_sizes <- table(z_df$Hierarchical_Cluster)
+print(cluster_sizes)
+
+# Scatter plot of InDegree vs OutDegree colored by hierarchical cluster
+ggplot(z_df, aes(x = InDegree, y = OutDegree, color = Hierarchical_Cluster)) +
+  geom_point() +
+  labs(title = "Hierarchical Clustering: InDegree vs OutDegree", x = "InDegree", y = "OutDegree") +
+  scale_color_manual(values = c("violet", "black")) +
+  theme(plot.title = element_text(hjust = 0.5))+ theme(legend.box.background = element_rect(color = "black", size = 1))
+
+# Bar plot of cluster centers for different variables
+cluster_centers <- aggregate(. ~ cluster, data = cbind(z_df_scaled, cluster = as.factor(clusters)), FUN = mean)
+
+# Convert the centers dataframe into long format
+centers_long <- tidyr::pivot_longer(cluster_centers, cols = -c(cluster), names_to = "Variable", values_to = "Value")
+
+ggplot(centers_long, aes(x = Value, y = Variable, fill = as.factor(cluster))) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(title = "Center of Variables for The Two Different Clusters", x = "Value", y = "Variable") +
+  scale_fill_manual(values = c("black", "violet")) +  
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        legend.box.background = element_rect(color = "black", size = 1))
+
+## Silhouette Analysis ##
+
+# Silhouette Analysis for K-Means Clustering
+range_n_clusters <- 2:10
+
+# Initialize an empty vector to store silhouette scores
+silhouette_avg_kmeans <- numeric(length(range_n_clusters))
+
+# Loop over each number of clusters
+for (num_cluster in range_n_clusters) {
+  kmeans_model <- kmeans(z_df_scaled, centers = num_cluster)
+  cluster_labels <- kmeans_model$cluster
+  silhouette_avg_kmeans[num_cluster - 1] <- fpc::cluster.stats(dist(z_df_scaled), cluster_labels)$avg.silwidth
+  cat("Number of clusters (K-Means):", num_cluster, " - Silhouette score:", silhouette_avg_kmeans[num_cluster - 1], "\n")
+}
+
+## Silhouette Analysis for Hierarchical Clustering
+silhouette_avg_hierarchical <- numeric(length(range_n_clusters))
+
+# Loop over each number of clusters
+for (num_cluster in range_n_clusters) {
+  hierarchical_model <- hclust(dist(z_df_scaled))
+  cut_tree <- cutree(hierarchical_model, k = num_cluster)
+  silhouette_avg_hierarchical[num_cluster - 1] <- fpc::cluster.stats(dist(z_df_scaled), cut_tree)$avg.silwidth
+  cat("Number of clusters (Hierarchical):", num_cluster, " - Silhouette score:", silhouette_avg_hierarchical[num_cluster - 1], "\n")
+}
+
+# Double Line graph plotting of silhouette scores for both K-Means and Hierarchical clustering
+plot(range_n_clusters, silhouette_avg_kmeans, type = "o", ylim = c(0, max(silhouette_avg_kmeans, silhouette_avg_hierarchical) + 0.1),
+     xlab = "Number of Clusters", ylab = "Silhouette Score", main = "Silhouette Score vs. Number of Clusters",
+     xlim = c(1, 10), pch = 16, col = "red", cex = 1.5)
+lines(range_n_clusters, silhouette_avg_hierarchical, type = "o", col = "blue", pch = 16, cex = 1.5)
+legend("topright", legend = c("K-Means", "Hierarchical"), col = c("red", "blue"), pch = 16, cex = 1.2, title = "Clustering Method")
+
+# Cluster Silhouette Plot
+library(factoextra)
+library(cluster)
+# Compute K-means clustering
+kmeans_model <- kmeans(z_df_scaled, centers = 2, nstart = 25)
+cluster_labels <- kmeans_model$cluster
+sil_width <- silhouette(cluster_labels, dist(z_df_scaled))
+fviz_silhouette(sil_width, palette = c("blue", "red"), border.color = NA)
+
+## Supervised Learning ##
+
+library(randomForest)
+library(class)
+library(caret)
+X <- z_df[, !(names(z_df) %in% c("Clusters", "AccountAge_years"))]
+y <- z_df$Clusters
+set.seed(42)
+# Split the data into training and testing sets
+train_indices <- createDataPartition(y, p = 0.7, list = FALSE)
+X_train <- X[train_indices, ]
+X_test <- X[-train_indices, ]
+y_train <- y[train_indices]
+y_test <- y[-train_indices]
+
+## Random Forest Method ##
+rf_classifier <- randomForest(x = X_train, y = as.factor(y_train),
+                              ntree = 100, mtry = sqrt(ncol(X_train)),
+                              importance = TRUE, nodesize = 1, seed = 101)
+y_pred_rf <- predict(rf_classifier, newdata = X_test)
+y_pred_rf_factor <- factor(y_pred_rf, levels = unique(y_test))
+y_test_factor <- factor(y_test, levels = unique(y_test))
+
+# Compute confusion matrix for Random Forest
+conf_matrix_rf <- confusionMatrix(y_pred_rf_factor, y_test_factor)
+# Print confusion matrix for Random Forest as a table
+conf_matrix_table_rf <- as.table(conf_matrix_rf$table)
+print("Confusion Matrix for Random Forest:")
+print(conf_matrix_table_rf)
+# Calculate accuracy using Random Forest
+accuracy_rf <- sum(y_pred_rf == y_test) / length(y_test)
+cat("Random Forest Accuracy:", accuracy_rf, "\n")
+# Print classification report for Random Forest
+cat("Random Forest Classification Report:\n")
+print(table(y_test, y_pred_rf))
+
+## KNN Method ##
+knn_model <- knn(train = X_train, test = X_test, cl = y_train, k = 2)
+y_pred_knn <- as.factor(knn_model)
+y_pred_knn_factor <- factor(y_pred_knn, levels = unique(y_test))
+# Compute confusion matrix for KNN
+conf_matrix_knn <- confusionMatrix(y_pred_knn_factor, y_test_factor)
+# Print confusion matrix for KNN as a table
+conf_matrix_table_knn <- as.table(conf_matrix_knn$table)
+print("Confusion Matrix for KNN:")
+print(conf_matrix_table_knn)
+# Calculate accuracy using KNN
+accuracy_knn <- sum(y_pred_knn == y_test) / length(y_test)
+cat("Accuracy for KNN:", accuracy_knn, "\n")
+
+
+# Precision, Recall, and F1-score Calculation
+
+# Random Forest Metrics
+precision_rf <- conf_matrix_rf$byClass["Pos Pred Value"]
+recall_rf <- conf_matrix_rf$byClass["Sensitivity"]
+f1_score_rf <- 2 * (precision_rf * recall_rf) / (precision_rf + recall_rf)
+
+# KNN Metrics
+precision_knn <- conf_matrix_knn$byClass["Pos Pred Value"]
+recall_knn <- conf_matrix_knn$byClass["Sensitivity"]
+f1_score_knn <- 2 * (precision_knn * recall_knn) / (precision_knn + recall_knn)
+
+# Print Metrics
+cat("\nRandom Forest Metrics:\n")
+cat("Precision:", precision_rf, "\n")
+cat("Recall:", recall_rf, "\n")
+cat("F1-score:", f1_score_rf, "\n")
+
+cat("\nKNN Metrics:\n")
+cat("Precision:", precision_knn, "\n")
+cat("Recall:", recall_knn, "\n")
+cat("F1-score:", f1_score_knn, "\n")
+

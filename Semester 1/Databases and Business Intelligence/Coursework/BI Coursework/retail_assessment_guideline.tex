@@ -1,0 +1,1103 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\usepackage{soul}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={E-commerce Exploratory Analytics \& Dashboard},
+  pdfauthor={rs2904},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{E-commerce Exploratory Analytics \& Dashboard}
+\author{rs2904}
+\date{2023-11-28}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+\hypertarget{assignment-overview}{%
+\section{Assignment Overview}\label{assignment-overview}}
+
+\hypertarget{background}{%
+\subsection{Background}\label{background}}
+
+With the rise of e-commerce, understanding customer behavior and
+purchasing patterns is vital for online businesses. Utilizing
+transactional data can provide actionable insights, helping to optimize
+sales strategies, improve customer experiences, and maximize revenue.
+Your primary objective is to assist an online retailer by analyzing
+their transaction data to uncover sales trends, customer segmentation,
+and potential areas of improvement.
+
+\hypertarget{data-insights}{%
+\subsection{Data Insights}\label{data-insights}}
+
+The data set captures transactions from December 2010 to December 2011
+from a UK-based online retailer. Fields include:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{InvoiceNo} - Invoice number - a 6-digit integral number
+  uniquely assigned to each transaction. If this code starts with letter
+  `c', it indicates a cancellation.
+\item
+  \texttt{StockCode} - a 5-digit integral number uniquely assigned to
+  each distinct product
+\item
+  \texttt{Description} - product name
+\item
+  \texttt{Quantity} - the quantities of each product (item) per
+  transaction
+\item
+  \texttt{InvoiceDate} - the day and time when each transaction was
+  generated
+\item
+  \texttt{UnitPrice} - product price per unit
+\item
+  \texttt{CustomerID} - a 5-digit integral number uniquely assigned to
+  each customer
+\item
+  \texttt{Country} - the name of the country where each customer resides
+\end{itemize}
+
+For more details about the data set, refer to the
+\href{https://archive.ics.uci.edu/ml/datasets/Online+Retail}{UCI Machine
+Learning Repository}.
+
+\hypertarget{part-1-data-exploration-with-r-60-of-total-marks}{%
+\subsection{Part 1: Data Exploration with R (60\% of total
+marks)}\label{part-1-data-exploration-with-r-60-of-total-marks}}
+
+\hypertarget{task}{%
+\subsubsection{Task}\label{task}}
+
+Based on the data set, determine:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  What are the most popular products and how do their sales vary over
+  time?
+\item
+  Can we segment customers based on their purchasing behavior?
+\item
+  Are there specific countries that contribute more to sales or have
+  unique buying patterns?
+\item
+  (Bonus) How do cancellations impact overall sales trends?
+\end{enumerate}
+
+\textbf{Reflection}: Beyond the questions above, take a moment to
+examine the data set critically.
+
+\begin{itemize}
+\tightlist
+\item
+  Are there any other interesting patterns or anomalies you notice?
+\item
+  What additional questions or analyses come to mind that could be
+  valuable for the retailer?
+\item
+  How might external factors, not present in the data set, influence the
+  trends you've observed?
+\end{itemize}
+
+Document your process, findings, and reflections in the current \emph{R
+Notebook} - just use the space below this assignment instructions. Be
+compact in your descriptive and reflective answers!
+
+\hypertarget{submission-requirements}{%
+\subsubsection{Submission Requirements}\label{submission-requirements}}
+
+\begin{itemize}
+\tightlist
+\item
+  The RMD file containing all answers and relevant code.
+\item
+  An HTML version of the notebook, knitted from the RMD.
+\end{itemize}
+
+\textbf{Note}: Ensure your report is: - Structured for easy navigation.
+- Includes clear visualizations with apt labels and annotations. -
+Provides short, compact answers to the exploratory questions, also
+documenting key steps. - Contains efficient and easily executable R
+code, preferably using \texttt{\%\textgreater{}\%} pipes for streamlined
+data manipulation.
+
+\hypertarget{part-2-tableau-dashboard-40-of-total-marks}{%
+\subsection{Part 2: Tableau Dashboard (40\% of total
+marks)}\label{part-2-tableau-dashboard-40-of-total-marks}}
+
+\hypertarget{task-1}{%
+\subsubsection{Task}\label{task-1}}
+
+Using insights from your R analysis, design a user-friendly, interactive
+dashboard in Tableau Desktop. Focus on showcasing significant findings
+related to sales trends and customer behaviors. Your target audience is
+the CEO of the online retail store - a non-tech-savvy individual keen on
+understanding broad trends, customer insights, and avenues for growth.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Storyboarding}: Prior to Tableau, sketch a dashboard
+  storyboard, snapshot or photograph it for the submission.
+\item
+  \textbf{Dashboard Creation in Tableau}: Transform your R insights into
+  a user-centric Tableau dashboard. Highlight crucial trends and
+  customer behaviors.
+\end{enumerate}
+
+\hypertarget{guidelines}{%
+\subsubsection{Guidelines}\label{guidelines}}
+
+\begin{itemize}
+\tightlist
+\item
+  Prioritize clarity and ease of navigation.
+\item
+  Utilize filters and design elements for an intuitive user experience.
+\item
+  Add descriptions and headers to guide users through your dashboard.
+\end{itemize}
+
+\hypertarget{submission-requirement}{%
+\subsubsection{Submission Requirement}\label{submission-requirement}}
+
+\begin{itemize}
+\tightlist
+\item
+  Submit the image of your storyboard sketch;
+\item
+  Submit the Tableau Packaged Workbook (TWBX) file, including all
+  worksheets and the final dashboard.
+\end{itemize}
+
+\textbf{Caution}: Always export as a \emph{Tableau Packaged Workbook
+(TWBX)}. Exporting as a \emph{Tableau Workbook (TWB)} might omit
+important data operations, making your dashboard potentially unreadable.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{commence-your-assignment-here}{%
+\section{Commence Your Assignment
+Here}\label{commence-your-assignment-here}}
+
+\hypertarget{data-import-preliminaries}{%
+\subsection{Data Import \&
+Preliminaries}\label{data-import-preliminaries}}
+
+Bringing external datasets into R for analysis is known as \textbf{data
+import} in the language. R has a number of functions and packages for
+importing data from different sources.
+
+The below code snippet will help to import the data set ``Online
+Retail.csv'' in R for further analysis.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cw\_data }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"Online Retail.csv"}\NormalTok{) }\CommentTok{\#the data set is assigned to the variable cw\_data}
+\end{Highlighting}
+\end{Shaded}
+
+After the import, the below code will help to start the analysis of the
+data by giving the head and summary of the data set.
+
+\textbf{head():} For checking the first 5 entries of the data set and
+along with the column names to understand the structure.
+
+\textbf{summary():} For obtaining the summary statistics for the data
+set using the summary() function, giving a brief rundown of the
+numerical variables.
+
+\textbf{library():} Used too load a specific package or library.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{head}\NormalTok{(cw\_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   InvoiceNo StockCode                         Description Quantity
+## 1    536365    85123A  WHITE HANGING HEART T-LIGHT HOLDER        6
+## 2    536365     71053                 WHITE METAL LANTERN        6
+## 3    536365    84406B      CREAM CUPID HEARTS COAT HANGER        8
+## 4    536365    84029G KNITTED UNION FLAG HOT WATER BOTTLE        6
+## 5    536365    84029E      RED WOOLLY HOTTIE WHITE HEART.        6
+## 6    536365     22752        SET 7 BABUSHKA NESTING BOXES        2
+##        InvoiceDate UnitPrice CustomerID        Country
+## 1 01/12/2010 08:26      2.55      17850 United Kingdom
+## 2 01/12/2010 08:26      3.39      17850 United Kingdom
+## 3 01/12/2010 08:26      2.75      17850 United Kingdom
+## 4 01/12/2010 08:26      3.39      17850 United Kingdom
+## 5 01/12/2010 08:26      3.39      17850 United Kingdom
+## 6 01/12/2010 08:26      7.65      17850 United Kingdom
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(cw\_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   InvoiceNo          StockCode         Description           Quantity        
+##  Length:541909      Length:541909      Length:541909      Min.   :-80995.00  
+##  Class :character   Class :character   Class :character   1st Qu.:     1.00  
+##  Mode  :character   Mode  :character   Mode  :character   Median :     3.00  
+##                                                           Mean   :     9.55  
+##                                                           3rd Qu.:    10.00  
+##                                                           Max.   : 80995.00  
+##                                                                              
+##  InvoiceDate          UnitPrice           CustomerID       Country         
+##  Length:541909      Min.   :-11062.06   Min.   :12346    Length:541909     
+##  Class :character   1st Qu.:     1.25   1st Qu.:13953    Class :character  
+##  Mode  :character   Median :     2.08   Median :15152    Mode  :character  
+##                     Mean   :     4.61   Mean   :15288                      
+##                     3rd Qu.:     4.13   3rd Qu.:16791                      
+##                     Max.   : 38970.00   Max.   :18287                      
+##                                         NA's   :135080
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(dplyr) }\CommentTok{\#dplyr library is essentially a set of functions designed to make manipulating dataframes more intuitive and user{-}friendly.}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: package 'dplyr' was built under R version 4.3.2
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'dplyr'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:stats':
+## 
+##     filter, lag
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union
+\end{verbatim}
+
+\hypertarget{data-diagnostic}{%
+\subsection{Data Diagnostic}\label{data-diagnostic}}
+
+The process of looking through data to find and fix problems,
+irregularities, or trends that could affect its dependability and
+quality is called \textbf{data diagnostic}. Making sure the data is
+correct, comprehensive, and appropriate for analysis is part of it.
+
+\textbf{(is.na(cw\_data)):} Used to calculate the number of missing
+values in each column of the data set.
+
+\textbf{print():} To display the missing values for each column to check
+for any gaps in the data.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{missing\_values\_per\_column }\OtherTok{\textless{}{-}} \FunctionTok{colSums}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(cw\_data))}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"Missing Values Per Column:}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Missing Values Per Column:
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(missing\_values\_per\_column)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   InvoiceNo   StockCode Description    Quantity InvoiceDate   UnitPrice 
+##           0           0           0           0           0           0 
+##  CustomerID     Country 
+##      135080           0
+\end{verbatim}
+
+The purpose of converting the \textbf{InvoiceDate} column to
+\textbf{POSIXct} format is to improve its temporal evaluation
+capabilities by making it more appropriate for time-based analysis.
+
+After conversion, the \textbf{InvoiceDate} field undergoes a
+comprehensive review to find and fix any errors. The objective is to
+guarantee data accuracy.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(lubridate) }\CommentTok{\#lubridate package offers utilities that make date{-}time information manipulation, extraction, and computation easier. }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'lubridate'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:base':
+## 
+##     date, intersect, setdiff, union
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cw\_data}\SpecialCharTok{$}\NormalTok{InvoiceDate }\OtherTok{\textless{}{-}} \FunctionTok{as.POSIXct}\NormalTok{(cw\_data}\SpecialCharTok{$}\NormalTok{InvoiceDate, }\AttributeTok{format =} \StringTok{"\%d/\%m/\%Y \%H:\%M"}\NormalTok{)}
+\FunctionTok{sum}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(cw\_data}\SpecialCharTok{$}\NormalTok{InvoiceDate))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0
+\end{verbatim}
+
+\hypertarget{in-depth-exploratory-data-analysis}{%
+\subsection{In-depth Exploratory Data
+Analysis}\label{in-depth-exploratory-data-analysis}}
+
+\hypertarget{question-1.-what-are-the-most-popular-products-and-how-do-their-sales-vary-over-time}{%
+\subsubsection{Question 1. What are the most popular products and how do
+their sales vary over
+time?}\label{question-1.-what-are-the-most-popular-products-and-how-do-their-sales-vary-over-time}}
+
+Analyzing the sale patterns and popularity of products is critical for
+all businesses looking for strategic insights. With the goal of
+understanding the most well-liked products and analyzing how there is a
+fluctuation over time, the below analysis provides the useful data for
+wise decision making in the ever evolving market environment.
+
+\textbf{aggregate():} Used to calculate the summary statistics or
+average of the given data set.
+
+The products are then sorted in a descending order based on the quantity
+to pinpoint the most popular product.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{product\_sales }\OtherTok{\textless{}{-}} \FunctionTok{aggregate}\NormalTok{(cw\_data}\SpecialCharTok{$}\NormalTok{Quantity, }\AttributeTok{by =} \FunctionTok{list}\NormalTok{(}\AttributeTok{Product =}\NormalTok{ cw\_data}\SpecialCharTok{$}\NormalTok{Description), sum)}
+\NormalTok{productlist\_sorted }\OtherTok{\textless{}{-}}\NormalTok{ product\_sales[}\FunctionTok{order}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{product\_sales}\SpecialCharTok{$}\NormalTok{x), ]}
+\FunctionTok{head}\NormalTok{(productlist\_sorted,}\DecValTok{10}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                                 Product     x
+## 4118  WORLD WAR 2 GLIDERS ASSTD DESIGNS 53847
+## 1916            JUMBO BAG RED RETROSPOT 47363
+## 259       ASSORTED COLOUR BIRD ORNAMENT 36381
+## 2805                     POPCORN HOLDER 36334
+## 2460    PACK OF 72 RETROSPOT CAKE CASES 36039
+## 4027 WHITE HANGING HEART T-LIGHT HOLDER 35317
+## 2869                 RABBIT NIGHT LIGHT 30680
+## 2219            MINI PAINT SET VINTAGE  26437
+## 2426         PACK OF 12 LONDON TISSUES  26315
+## 2458 PACK OF 60 PINK PAISLEY CAKE CASES 24753
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cat}\NormalTok{(}\StringTok{"The Most Popular Product is"}\NormalTok{, productlist\_sorted}\SpecialCharTok{$}\NormalTok{Product[}\DecValTok{1}\NormalTok{],}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## The Most Popular Product is WORLD WAR 2 GLIDERS ASSTD DESIGNS
+\end{verbatim}
+
+The result shows that ``\textbf{WORLD WAR 2 GLIDERS ASSTD DESIGNS}'' is
+the top-performing item.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: package 'ggplot2' was built under R version 4.3.2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{productlist\_top3 }\OtherTok{\textless{}{-}}\NormalTok{ cw\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(Description }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"WORLD WAR 2 GLIDERS ASSTD DESIGNS"}\NormalTok{, }\StringTok{"JUMBO BAG RED RETROSPOT"}\NormalTok{, }\StringTok{"ASSORTED COLOUR BIRD ORNAMENT"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{total\_sales =}\NormalTok{ Quantity }\SpecialCharTok{*}\NormalTok{ UnitPrice) }\CommentTok{\#the top 3 out of the top 5 products from the above list is added in this}
+
+\NormalTok{productlist\_top3 }\OtherTok{\textless{}{-}}\NormalTok{ productlist\_top3 }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(total\_sales }\SpecialCharTok{\textgreater{}=} \DecValTok{0}\NormalTok{)}
+\FunctionTok{ggplot}\NormalTok{(productlist\_top3, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ InvoiceDate, }\AttributeTok{y =}\NormalTok{ Quantity, }\AttributeTok{color =}\NormalTok{ Description)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{size =} \DecValTok{2}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.8}\NormalTok{, }\AttributeTok{show.legend =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{size =} \FloatTok{1.5}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.8}\NormalTok{, }\AttributeTok{linetype =} \StringTok{"solid"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Top 3 Products: Sales Over Time"}\NormalTok{, }\AttributeTok{x =} \StringTok{"Date"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Quantity"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{scale\_color\_brewer}\NormalTok{(}\AttributeTok{palette =} \StringTok{"Set1"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position =} \StringTok{"top"}\NormalTok{, }
+        \AttributeTok{legend.text =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{7}\NormalTok{), }
+        \AttributeTok{legend.title =} \FunctionTok{element\_blank}\NormalTok{(),}
+        \AttributeTok{axis.text.x =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{angle =} \DecValTok{45}\NormalTok{, }\AttributeTok{hjust =} \DecValTok{1}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{annotate}\NormalTok{(}\StringTok{"text"}\NormalTok{, }\AttributeTok{x =} \FunctionTok{max}\NormalTok{(productlist\_top3}\SpecialCharTok{$}\NormalTok{InvoiceDate), }
+           \AttributeTok{y =} \FunctionTok{max}\NormalTok{(productlist\_top3}\SpecialCharTok{$}\NormalTok{total\_sales), }
+           \AttributeTok{label =} \StringTok{""}\NormalTok{, }
+           \AttributeTok{hjust =} \DecValTok{1}\NormalTok{, }\AttributeTok{vjust =} \DecValTok{1}\NormalTok{, }\AttributeTok{size =} \DecValTok{3}\NormalTok{, }\AttributeTok{color =} \StringTok{"gray50"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_x\_datetime}\NormalTok{(}\AttributeTok{date\_labels =} \StringTok{"\%b \%Y"}\NormalTok{, }\AttributeTok{date\_breaks =} \StringTok{"3 months"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{plot.title =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{hjust =} \FloatTok{0.5}\NormalTok{, }\AttributeTok{size =} \DecValTok{18}\NormalTok{, }\AttributeTok{face =} \StringTok{"bold"}\NormalTok{),}
+        \AttributeTok{plot.caption =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{8}\NormalTok{, }\AttributeTok{color=}\StringTok{"gray50"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+## i Please use `linewidth` instead.
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+## generated.
+\end{verbatim}
+
+\includegraphics{retail_assessment_guideline_files/figure-latex/unnamed-chunk-6-1.pdf}
+
+Every product is represented by a colored line, with the quantity sold
+shown on the y-axis and the dates (\textbf{InvoiceDate}) displayed on
+the x-axis. You can see how the sales numbers of these particular
+products have fluctuated over time with this visualization, which offers
+insights into their popularity and possible seasonal fluctuations.
+
+\ul{\textbf{Conclusion:}}
+
+Thorough quality checks of the data set was carried out to find and fix
+any missing values in the data set. The \textbf{InvoiceDate} information
+is converted into an appropriate date-time format in order to enable
+time-based analysis.
+
+Based on total quantity sold, the most popular product was determined to
+be ``\textbf{WORLD WAR 2 GLIDERS ASSTD DESIGNS}'' which offers
+insightful information about customer preferences.
+
+The top three best-selling products are ``\textbf{WORLD WAR 2 GLIDERS
+ASSTD DESIGNS}'', ``\textbf{JUMBO BAG RED RETROSPOT}'' and
+``\textbf{ASSORTED COLOUR BIRD ORNAMENT}''. The graph shows the sales
+trends for these products over time. The graphic gives a brief summary
+of how the sales quantities of each product have changed over time, with
+each colored line representing a different product.
+
+\hypertarget{question-2.-can-we-segment-customers-based-on-their-purchasing-behavior}{%
+\subsubsection{Question 2. Can we segment customers based on their
+purchasing
+behavior?}\label{question-2.-can-we-segment-customers-based-on-their-purchasing-behavior}}
+
+The objective of this question is to identify unique trends in consumer
+purchasing behavior in order to inform customized marketing plans and
+raise overall company performance.
+
+\ul{\textbf{Data Filtering:}} Cleaning the dataset entails eliminating
+any missing or erroneous customer entries in order to provide a refined
+dataset that is called \textbf{filtered\_data}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{filtered\_data }\OtherTok{\textless{}{-}}\NormalTok{ cw\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(CustomerID }\SpecialCharTok{!=} \DecValTok{0}\NormalTok{) }\CommentTok{\#to filter out rows where CustomerID is equal to 0}
+\FunctionTok{head}\NormalTok{(filtered\_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   InvoiceNo StockCode                         Description Quantity
+## 1    536365    85123A  WHITE HANGING HEART T-LIGHT HOLDER        6
+## 2    536365     71053                 WHITE METAL LANTERN        6
+## 3    536365    84406B      CREAM CUPID HEARTS COAT HANGER        8
+## 4    536365    84029G KNITTED UNION FLAG HOT WATER BOTTLE        6
+## 5    536365    84029E      RED WOOLLY HOTTIE WHITE HEART.        6
+## 6    536365     22752        SET 7 BABUSHKA NESTING BOXES        2
+##           InvoiceDate UnitPrice CustomerID        Country
+## 1 2010-12-01 08:26:00      2.55      17850 United Kingdom
+## 2 2010-12-01 08:26:00      3.39      17850 United Kingdom
+## 3 2010-12-01 08:26:00      2.75      17850 United Kingdom
+## 4 2010-12-01 08:26:00      3.39      17850 United Kingdom
+## 5 2010-12-01 08:26:00      3.39      17850 United Kingdom
+## 6 2010-12-01 08:26:00      7.65      17850 United Kingdom
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{nrow}\NormalTok{(filtered\_data) }\CommentTok{\#nrow() is used to check the total number of rows in the data set}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 406829
+\end{verbatim}
+
+A new dataframe is created named \textbf{filtered\_data}, which contains
+the records of all the valid customers.
+
+\textbf{Summary:} The records with missing or invalid customer
+identifiers have been eliminated.
+
+\ul{\textbf{Strategic Customer Segmentation:}} Understanding consumer
+behaviour through classifying them according to their buying activity is
+the main goal of strategic segmentation.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{segments }\OtherTok{\textless{}{-}}\NormalTok{ cw\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(CustomerID) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}
+    \AttributeTok{TotalPurchases =} \FunctionTok{n}\NormalTok{(),}
+    \AttributeTok{TotalSpending =} \FunctionTok{sum}\NormalTok{(Quantity }\SpecialCharTok{*}\NormalTok{ UnitPrice)}
+\NormalTok{  )}
+\FunctionTok{head}\NormalTok{(segments)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 3
+##   CustomerID TotalPurchases TotalSpending
+##        <int>          <int>         <dbl>
+## 1      12346              2            0 
+## 2      12347            182         4310 
+## 3      12348             31         1797.
+## 4      12349             73         1758.
+## 5      12350             17          334.
+## 6      12352             95         1545.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{nrow}\NormalTok{(segments)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 4373
+\end{verbatim}
+
+The \textbf{segments} dataframe is composed of metrics that are computed
+for every customer, including \textbf{TotalPurchases} which is the total
+amount obtained by multiplying \textbf{Quantity} by \textbf{UnitPrice,}
+and \textbf{TotalSpending} which is the number of transactions.. The
+data has been grouped together by \textbf{CustomerID} by the use of
+dplyr package in R.
+
+\textbf{Summary:} A complete summary dataframe, called \textbf{segments}
+has been created that contains various customer segments and relevant
+metrics like the number of purchases and total spending.
+
+\ul{\textbf{Agglomerative Grouping Analysis:}} To identify groups within
+the customers that correspond to their unique buying patterns.
+
+For clustering, the segments of the dataframe are chosen so that the
+relevant columns (\textbf{TotalPurchases} and \textbf{TotalSpending})
+are selected. Three clusters \textbf{(k = 5)} have been created for the
+customers based on their purchase metrics using the hierarchical
+clustering (\textbf{hclust} function). In the \textbf{segments}
+dataframe, the cluster labels are allocated to every customer.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{clustering\_data }\OtherTok{\textless{}{-}}\NormalTok{ segments[, }\FunctionTok{c}\NormalTok{(}\StringTok{"TotalPurchases"}\NormalTok{, }\StringTok{"TotalSpending"}\NormalTok{)]}
+\NormalTok{hc }\OtherTok{\textless{}{-}} \FunctionTok{hclust}\NormalTok{(}\FunctionTok{dist}\NormalTok{(clustering\_data))}
+\NormalTok{clusters }\OtherTok{\textless{}{-}} \FunctionTok{cutree}\NormalTok{(hc, }\AttributeTok{k =} \DecValTok{5}\NormalTok{)}
+\NormalTok{segments}\SpecialCharTok{$}\NormalTok{Cluster }\OtherTok{\textless{}{-}} \FunctionTok{as.factor}\NormalTok{(clusters)}
+\FunctionTok{head}\NormalTok{(segments, }\DecValTok{10}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 10 x 4
+##    CustomerID TotalPurchases TotalSpending Cluster
+##         <int>          <int>         <dbl> <fct>  
+##  1      12346              2            0  1      
+##  2      12347            182         4310  1      
+##  3      12348             31         1797. 1      
+##  4      12349             73         1758. 1      
+##  5      12350             17          334. 1      
+##  6      12352             95         1545. 1      
+##  7      12353              4           89  1      
+##  8      12354             58         1079. 1      
+##  9      12355             13          459. 1      
+## 10      12356             59         2811. 1
+\end{verbatim}
+
+\textbf{Summary:} A recently added factor variable named
+``\textbf{Cluster}'' in the segments dataframe now denotes the assigned
+cluster for each customer.
+
+\ul{\textbf{Conclusion:}}
+
+Through the removal of incomplete records, the systematic analysis
+successfully segments customers based on their purchase behavior,
+guaranteeing data accuracy. With the help of KPIs like
+\textbf{TotalPurchases} and \textbf{TotalSpending}, the resulting
+customer categories provide detailed information. By using clustering,
+different buying patterns can be identified, allowing for more focused
+marketing campaigns. These results offer practical information that
+directs strategic choices and improves overall business success.
+
+\hypertarget{question-3.-are-there-specific-countries-that-contribute-more-to-sales-or-have-unique-buying-patterns}{%
+\subsubsection{Question 3. Are there specific countries that contribute
+more to sales or have unique buying
+patterns?}\label{question-3.-are-there-specific-countries-that-contribute-more-to-sales-or-have-unique-buying-patterns}}
+
+By analyzing whether particular nations make a substantial contribution
+to overall sales or display distinctive purchasing patterns, this
+approach seeks to provide important insights into sales dynamics.
+Businesses trying to customize strategy, distribute resources
+effectively, and modify marketing tactics for a variety of markets must
+comprehend these regional quirks.
+
+The \textbf{summary()} function has been used to derive the summary
+statistics of the data set.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(cw\_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   InvoiceNo          StockCode         Description           Quantity        
+##  Length:541909      Length:541909      Length:541909      Min.   :-80995.00  
+##  Class :character   Class :character   Class :character   1st Qu.:     1.00  
+##  Mode  :character   Mode  :character   Mode  :character   Median :     3.00  
+##                                                           Mean   :     9.55  
+##                                                           3rd Qu.:    10.00  
+##                                                           Max.   : 80995.00  
+##                                                                              
+##   InvoiceDate                       UnitPrice           CustomerID    
+##  Min.   :2010-12-01 08:26:00.00   Min.   :-11062.06   Min.   :12346   
+##  1st Qu.:2011-03-28 11:34:00.00   1st Qu.:     1.25   1st Qu.:13953   
+##  Median :2011-07-19 17:17:00.00   Median :     2.08   Median :15152   
+##  Mean   :2011-07-04 14:02:44.05   Mean   :     4.61   Mean   :15288   
+##  3rd Qu.:2011-10-19 11:27:00.00   3rd Qu.:     4.13   3rd Qu.:16791   
+##  Max.   :2011-12-09 12:50:00.00   Max.   : 38970.00   Max.   :18287   
+##                                                       NA's   :135080  
+##    Country         
+##  Length:541909     
+##  Class :character  
+##  Mode  :character  
+##                    
+##                    
+##                    
+## 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{unique\_countries }\OtherTok{\textless{}{-}} \FunctionTok{unique}\NormalTok{(cw\_data}\SpecialCharTok{$}\NormalTok{Country)}
+\FunctionTok{print}\NormalTok{(unique\_countries)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] "United Kingdom"       "France"               "Australia"           
+##  [4] "Netherlands"          "Germany"              "Norway"              
+##  [7] "EIRE"                 "Switzerland"          "Spain"               
+## [10] "Poland"               "Portugal"             "Italy"               
+## [13] "Belgium"              "Lithuania"            "Japan"               
+## [16] "Iceland"              "Channel Islands"      "Denmark"             
+## [19] "Cyprus"               "Sweden"               "Austria"             
+## [22] "Israel"               "Finland"              "Bahrain"             
+## [25] "Greece"               "Hong Kong"            "Singapore"           
+## [28] "Lebanon"              "United Arab Emirates" "Saudi Arabia"        
+## [31] "Czech Republic"       "Canada"               "Unspecified"         
+## [34] "Brazil"               "USA"                  "European Community"  
+## [37] "Malta"                "RSA"
+\end{verbatim}
+
+A list of all the \textbf{unique} countries in the data set are
+displayed above.
+
+Total sales for each nation are determined by multiplying the
+\textbf{UnitPrice} by the \textbf{Quantity} as below.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sales\_by\_country }\OtherTok{\textless{}{-}}\NormalTok{ cw\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(Country) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{total\_sales =} \FunctionTok{sum}\NormalTok{(UnitPrice}\SpecialCharTok{*}\NormalTok{Quantity))}
+\NormalTok{sales\_by\_country}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 38 x 2
+##    Country         total_sales
+##    <chr>                 <dbl>
+##  1 Australia           137077.
+##  2 Austria              10154.
+##  3 Bahrain                548.
+##  4 Belgium              40911.
+##  5 Brazil                1144.
+##  6 Canada                3666.
+##  7 Channel Islands      20086.
+##  8 Cyprus               12946.
+##  9 Czech Republic         708.
+## 10 Denmark              18768.
+## # i 28 more rows
+\end{verbatim}
+
+The above helps in identifying the regions which contribute
+significantly to the sales.
+
+The distribution of total sales across several countries is calculated
+below:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sales\_by\_country }\OtherTok{\textless{}{-}}\NormalTok{ sales\_by\_country }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Country =} \FunctionTok{reorder}\NormalTok{(Country, }\SpecialCharTok{{-}}\NormalTok{total\_sales))}
+
+\FunctionTok{ggplot}\NormalTok{(sales\_by\_country, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Country, }\AttributeTok{y =}\NormalTok{ total\_sales, }\AttributeTok{fill =}\NormalTok{ Country)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{, }\AttributeTok{color =} \StringTok{"black"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Total Sales by Country"}\NormalTok{, }\AttributeTok{x =} \StringTok{"Country"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Total Sales"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.text.x =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size=}\DecValTok{8}\NormalTok{,}\AttributeTok{angle =} \DecValTok{90}\NormalTok{, }\AttributeTok{hjust =} \DecValTok{1}\NormalTok{),}
+        \AttributeTok{axis.title.x =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{10}\NormalTok{),}
+        \AttributeTok{plot.title =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{18}\NormalTok{, }\AttributeTok{hjust=}\FloatTok{0.5}\NormalTok{, }\AttributeTok{face =} \StringTok{\textquotesingle{}bold\textquotesingle{}}\NormalTok{),}
+        \AttributeTok{legend.text =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{6}\NormalTok{),}
+        \AttributeTok{legend.title =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{6}\NormalTok{),}
+        \AttributeTok{legend.position =} \StringTok{"top"}\NormalTok{,}
+        \AttributeTok{legend.key.size =} \FunctionTok{unit}\NormalTok{(}\FloatTok{0.3}\NormalTok{, }\StringTok{"cm"}\NormalTok{))}\SpecialCharTok{+}
+  \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{labels =}\NormalTok{ scales}\SpecialCharTok{::}\FunctionTok{comma\_format}\NormalTok{(}\AttributeTok{scale =} \FloatTok{1e{-}6}\NormalTok{, }\AttributeTok{suffix =} \StringTok{"M"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{retail_assessment_guideline_files/figure-latex/unnamed-chunk-12-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(sales\_by\_country, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Country, }\AttributeTok{y =}\NormalTok{ total\_sales, }\AttributeTok{fill =}\NormalTok{ Country)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{, }\AttributeTok{color =} \StringTok{"black"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Total Sales by Country(Logarithmic Scale)"}\NormalTok{, }\AttributeTok{x =} \StringTok{"Country"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Total Sales (log scale)"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.text.x =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size=}\DecValTok{8}\NormalTok{, }\AttributeTok{angle =} \DecValTok{90}\NormalTok{, }\AttributeTok{hjust =} \DecValTok{1}\NormalTok{),}
+        \AttributeTok{axis.title.x =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{10}\NormalTok{),}
+        \AttributeTok{plot.title =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{18}\NormalTok{, }\AttributeTok{hjust=}\FloatTok{0.5}\NormalTok{, }\AttributeTok{face =} \StringTok{\textquotesingle{}bold\textquotesingle{}}\NormalTok{),}
+        \AttributeTok{legend.text =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{6}\NormalTok{),}
+        \AttributeTok{legend.title =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{6}\NormalTok{),}
+        \AttributeTok{legend.position =} \StringTok{"top"}\NormalTok{,}
+        \AttributeTok{legend.key.size =} \FunctionTok{unit}\NormalTok{(}\FloatTok{0.3}\NormalTok{, }\StringTok{"cm"}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{scale\_y\_log10}\NormalTok{(}\AttributeTok{labels =}\NormalTok{ scales}\SpecialCharTok{::}\FunctionTok{comma\_format}\NormalTok{(}\AttributeTok{scale =} \FloatTok{1e{-}6}\NormalTok{, }\AttributeTok{suffix =} \StringTok{"M"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{retail_assessment_guideline_files/figure-latex/unnamed-chunk-12-2.pdf}
+
+For the purpose of visualizing total sales, the first code snippet
+(scale\_y\_continuous) formats labels with commas and a ``M'' suffix on
+a linear scale. A logarithmic scale is used in the second code snippet
+(scale\_y\_log10) to provide a clearer depiction of the distribution of
+the data, which is advantageous for data sets with a large range of
+values.
+
+The distribution of order quantity among different countries is shown
+visually by a box plot below.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(cw\_data, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{reorder}\NormalTok{(Country, Quantity, }\AttributeTok{FUN =}\NormalTok{ median), }\AttributeTok{y =}\NormalTok{ Quantity)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_boxplot}\NormalTok{( }\AttributeTok{color =} \StringTok{"royalblue"}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.7}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Order Quantity Distribution by Country"}\NormalTok{, }\AttributeTok{x =} \StringTok{"Country"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Order Quantity (in units)"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.text.x =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{angle =} \DecValTok{45}\NormalTok{, }\AttributeTok{hjust =} \DecValTok{1}\NormalTok{),}
+        \AttributeTok{plot.title =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{18}\NormalTok{, }\AttributeTok{hjust=}\FloatTok{0.5}\NormalTok{, }\AttributeTok{face =} \StringTok{\textquotesingle{}bold\textquotesingle{}}\NormalTok{),}
+        \AttributeTok{legend.position =} \StringTok{"none"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{retail_assessment_guideline_files/figure-latex/unnamed-chunk-13-1.pdf}
+
+The analysis of the box plot yields valuable information about the
+central tendencies and dispersion of order quantity in various
+countries. It also displays the distribution of order quantities among
+several nations which highlights the variation in consumer behavior.
+
+\textbf{Summary:} The data set was analysed to find important features,
+highlighting major contributors by calculating total sales for each
+distinct country and identifying unique countries. To clearly depict the
+distribution of order quantities among nations as well as overall sales,
+visualizations were used.
+
+According to the data, the \textbf{UK accounts for a significant portion
+of total sales}, highlighting the necessity of specialized tactics and
+resource allocation. A significant concentration of overall sales in the
+UK is shown by the data. This highlights the necessity of developing
+strategies that are specific to the British market. Companies should use
+their resources carefully in order to take advantage of UK consumers'
+high spending power and unique purchasing habits.
+
+Although the contributions from other nations might not be as great, the
+understanding of unique purchasing habits offers useful direction for
+modifying marketing strategies and formulating tactical choices.
+
+\hypertarget{question-4-bonus.-how-do-cancellations-impact-overall-sales-trends}{%
+\subsubsection{Question 4 (Bonus). How do cancellations impact overall
+sales
+trends?}\label{question-4-bonus.-how-do-cancellations-impact-overall-sales-trends}}
+
+Analyzing how cancellations affect sales trends is essential to
+understand the dynamics of operations. The goal of this study is to give
+a thorough grasp of the complex relationship between sales and
+cancellations to the company looking to enhance customer happiness and
+optimize operations. This study directs strategic decisions for improved
+corporate performance by finding trends and insights.
+
+\ul{\textbf{Finding Cancelled Transactions:}} We filtered the data to
+find transactions that had an invoice number beginning with
+``\textbf{C}'' which indicates that the transaction was cancelled. The
+outcome of this procedure was the establishment of a special dataframe
+called ``\textbf{cancelled\_data},'' which contained only records of
+cancelled transactions.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cancelled\_data }\OtherTok{\textless{}{-}}\NormalTok{ cw\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(}\FunctionTok{startsWith}\NormalTok{(InvoiceNo, }\StringTok{"C"}\NormalTok{))}
+
+\NormalTok{sales\_plot }\OtherTok{\textless{}{-}}\NormalTok{ cw\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(InvoiceDate) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}
+    \AttributeTok{TotalSales =} \FunctionTok{sum}\NormalTok{(Quantity }\SpecialCharTok{*}\NormalTok{ UnitPrice),}
+    \AttributeTok{cancelledSales =} \FunctionTok{sum}\NormalTok{(}\FunctionTok{ifelse}\NormalTok{(}\FunctionTok{startsWith}\NormalTok{(InvoiceNo, }\StringTok{"C"}\NormalTok{), Quantity }\SpecialCharTok{*}\NormalTok{ UnitPrice, }\DecValTok{0}\NormalTok{))}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+Grouping the original data by \textbf{InvoiceDate}, two key metrics were
+calculated for each date:
+
+\begin{itemize}
+\item
+  \ul{\textbf{TotalSales:}} The sum of \textbf{Quantity} multiplied by
+  \textbf{UnitPrice} for all transactions.
+\item
+  \ul{\textbf{cancelledSales:}} The sum of Quantity multiplied by
+  \textbf{UnitPrice} for cancelled transactions. This analysis generated
+  a summary dataframe, ``\textbf{sales\_plot},'' capturing both total
+  and cancelled sales trends over time.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(sales\_plot, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ InvoiceDate)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y =}\NormalTok{ TotalSales, }\AttributeTok{color =} \StringTok{"Total Sales"}\NormalTok{), }\AttributeTok{size =} \FloatTok{1.2}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.8}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y =}\NormalTok{ cancelledSales, }\AttributeTok{color =} \StringTok{"cancelled Sales"}\NormalTok{), }\AttributeTok{size =} \FloatTok{1.2}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.8}\NormalTok{, }\AttributeTok{linetype =} \StringTok{"dashed"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Sales Dynamics: Total vs Cancelled"}\NormalTok{,}
+       \AttributeTok{x =} \StringTok{"Date"}\NormalTok{,}
+       \AttributeTok{y =} \StringTok{"Sales"}\NormalTok{,}
+       \AttributeTok{color =} \StringTok{"Sales Type"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{labels =}\NormalTok{ scales}\SpecialCharTok{::}\FunctionTok{comma\_format}\NormalTok{()) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position =} \StringTok{"top"}\NormalTok{, }\AttributeTok{plot.title =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{18}\NormalTok{, }\AttributeTok{hjust=}\FloatTok{0.5}\NormalTok{, }\AttributeTok{face =} \StringTok{\textquotesingle{}bold\textquotesingle{}}\NormalTok{),}
+        \AttributeTok{legend.title =} \FunctionTok{element\_blank}\NormalTok{())}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{retail_assessment_guideline_files/figure-latex/unnamed-chunk-15-1.pdf}
+
+\ul{\textbf{Visualization of Total vs.~Cancelled Sales Trends:}} To show
+how total and cancelled sales have changed over time, a dynamic line
+plot is created above.
+
+\textbf{Summary:}
+
+\textbf{Analysis of Cancellations:} Segregated and recognized
+transactions within the data set that were designated as cancellations.
+
+\textbf{Sales Insights:} Provided an overview of overall sales trends
+and cancellations within the data set by summarizing both total and
+cancelled sales for each date.
+
+\textbf{Visual Representation:} Using a line plot, it was possible to
+clearly show how total and cancelled sales have changed over time.
+
+Companies can use this research as a strategic compass to help them make
+decisions that will improve customer experiences and increase
+operational efficiency in the face of cancellations' negative effects on
+overall sales trends.
+
+\hypertarget{summary-key-takeaways}{%
+\subsection{Summary \& Key Takeaways}\label{summary-key-takeaways}}
+
+\ul{\textbf{Summary:}}
+
+The ``\textbf{Online Retail.csv}'' data set was analysed using
+structural exploration, data diagnostics, and strategic questions.
+
+\textbf{Product Popularity:} Sales trends for the top three products
+throughout time were visualized, and ``WORLD WAR 2 GLIDERS ASSTD
+DESIGNS'' was found to be the best-performing product.
+
+\textbf{Consumer Segmentation:} To gain insights into a range of
+purchase behaviors, hierarchical clustering was employed for strategic
+consumer segmentation.
+
+\textbf{Sales by Country:} This analysis focused on the countries that
+made up the majority of sales, with a particular emphasis on the
+\textbf{UK}.
+
+\textbf{Impact of Cancellations:} Provided operational insights by
+examining the correlation between sales trends and cancellations.
+
+\ul{\textbf{Key Takeaways:}}
+
+\textbf{Product Strategy:} Based on the success of ``\textbf{WORLD WAR 2
+GLIDERS ASSTD DESIGNS}'' adjust marketing plans and inventory.
+
+\textbf{Customer-Centric Approach:} Use customer segmentation to improve
+engagement and target marketing.
+
+\textbf{Global Sales Tactics:} Take note of the \textbf{UK's}
+significant contribution to overall sales and modify plans to account
+for various national purchasing habits.
+
+\textbf{Operational Optimization:} For increased customer happiness and
+operational efficiency, comprehend the dynamics of cancellations.
+
+For strategic decision-making, marketing optimization, and general
+business success, this detailed analysis offers useful insights.
+
+\textbf{Analysis by Critical Examination:}
+
+Interesting patterns observed:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \ul{Seasonal Trends:} Marketing and inventory planning depend heavily
+  on seasonal sales patterns, which are influenced by occasions like
+  festivals and holidays. Acknowledging peak seasons enables companies
+  to coordinate plans, maximize stock, and satisfy increased customer
+  demand at particular periods of the year.
+\item
+  \ul{Customer Behavior Anomalies:} Abnormalities in customer behavior
+  are indicated by sudden swings in sales data that cannot be attributed
+  to internal reasons. Customer behaviors might be impacted by outside
+  factors like cultural or economic changes. Businesses can adjust their
+  strategy to changing client preferences and external dynamics by
+  recognising and comprehending these anomalies.
+\item
+  \ul{Product Combinations:} Consistent product matching analysis
+  provides business insights. The ability to identify products that are
+  regularly bought together allows for the development of packaged
+  offers or tailored suggestions. This tactic improves the shopping
+  encounter, promotes repeat business, and increases customer happiness.
+\end{enumerate}
+
+\end{document}

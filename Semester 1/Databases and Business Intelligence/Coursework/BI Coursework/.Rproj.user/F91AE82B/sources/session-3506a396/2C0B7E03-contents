@@ -1,0 +1,15 @@
+# For reading the data from the dataset
+z_df <- read.csv("C:/Users/Ritwik Singh/OneDrive - University of Bath/Documents/Semester 2/Data Mining & ML/Coursework/Data_DMML.csv")
+
+#add a column to the dataframe name engagement
+z_df$engagement <- z_df$TotalPosts / z_df$AccountAge
+
+
+# Create a boxplot for the "engagement" column
+boxplot(z_df$engagement, 
+        main = "Boxplot of Engagement", 
+        ylab = "Engagement", 
+        col = "skyblue",
+        border = "black",
+        notch = TRUE,
+        outline = FALSE)

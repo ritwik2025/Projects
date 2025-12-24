@@ -1,0 +1,1 @@
+{"frames":[],"message":"Error in ggplot(sales_by_country, aes(x = Country, y = total_sales, fill = Country)) : \n  could not find function \"ggplot\"\n"}

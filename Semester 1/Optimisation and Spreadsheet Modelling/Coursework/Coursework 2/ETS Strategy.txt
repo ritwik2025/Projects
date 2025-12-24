@@ -1,0 +1,89 @@
+ETS Strategy:
+print("Mean MAPE:")
+[1] "Mean MAPE:"
+> print(mean(mape_matrix, na.rm = TRUE))
+[1] 14.27293
+> print("Mean MAE:")
+[1] "Mean MAE:"
+> print(mean(mae_matrix, na.rm = TRUE))
+[1] 513.7498
+> print("Mean RMSE:")
+[1] "Mean RMSE:"
+> print(mean(rmse_matrix, na.rm = TRUE))
+[1] 603.3285
+
+
+
+ARIMA Strategy:
+print("Mean MAPE:")
+[1] "Mean MAPE:"
+> print(mean(mape_matrix, na.rm = TRUE))
+[1] 14.89242
+> print("Mean MAE:")
+[1] "Mean MAE:"
+> print(mean(mae_matrix, na.rm = TRUE))
+[1] 516.4865
+> print("Mean RMSE:")
+[1] "Mean RMSE:"
+> print(mean(rmse_matrix, na.rm = TRUE))
+[1] 611.5083
+
+
+ETS or ARIMA Strategy:
+print("Mean MAPE:")
+[1] "Mean MAPE:"
+> print(mean(mape_matrix, na.rm = TRUE))
+[1] 13.97919
+> print("Mean MAE:")
+[1] "Mean MAE:"
+> print(mean(mae_matrix, na.rm = TRUE))
+[1] 499.1514
+> print("Mean RMSE:")
+[1] "Mean RMSE:"
+> print(mean(rmse_matrix, na.rm = TRUE))
+[1] 592.215
+
+
+Naive Strategy:
+print("Mean MAPE:")
+[1] "Mean MAPE:"
+> print(mean(mape_matrix, na.rm = TRUE))
+[1] 17.87891
+> print("Mean MAE:")
+[1] "Mean MAE:"
+> print(mean(mae_matrix, na.rm = TRUE))
+[1] 647.6004
+> print("Mean RMSE:")
+[1] "Mean RMSE:"
+> print(mean(rmse_matrix, na.rm = TRUE))
+[1] 768.0903
+
+
+Seasonal Naive Strategy:
+print("Mean MAPE:")
+[1] "Mean MAPE:"
+> print(mean(mape_matrix, na.rm = TRUE))
+[1] 16.9789
+> print("Mean MAE:")
+[1] "Mean MAE:"
+> print(mean(mae_matrix, na.rm = TRUE))
+[1] 627.6305
+> print("Mean RMSE:")
+[1] "Mean RMSE:"
+> print(mean(rmse_matrix, na.rm = TRUE))
+[1] 762.4978
+
+
+Mean Strategy:
+print("Mean MAPE:")
+[1] "Mean MAPE:"
+> print(mean(mape_matrix, na.rm = TRUE))
+[1] 28.27376
+> print("Mean MAE:")
+[1] "Mean MAE:"
+> print(mean(mae_matrix, na.rm = TRUE))
+[1] 970.1843
+> print("Mean RMSE:")
+[1] "Mean RMSE:"
+> print(mean(rmse_matrix, na.rm = TRUE))
+[1] 1064.508
