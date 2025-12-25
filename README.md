@@ -159,6 +159,9 @@ Each project contains:
 
 # 📬 Let’s Connect  
 
-If you’re a recruiter or hiring manager looking for someone who can **turn data into decisions**, explore any project above — each one reflects **real-world analytical thinking and execution**.
+If you’re a recruiter or hiring manager looking for someone who can **turn data into decisions**, explore any project above each one reflects **real-world analytical thinking and execution**.
 
-⭐ If you find this portfolio useful, feel free to star the repo!
+---
+
+<p align="center">⭐ If you find this portfolio useful, feel free to star the repo! ⭐</p>
+
